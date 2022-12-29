@@ -2,21 +2,21 @@
   {
     "idno": 1,
     "dbimg": "https://i.ibb.co/hdV9zry/task1.png",
-    "email": "mdgalib23@gmail.com",
+    "email": "haba@gmail.com",
     "iscompleted": "yes",
     "details": "I have to go to university 26th january"
   },
   {
     "idno": 2,
     "dbimg": "https://i.ibb.co/QFf9017/task2.png",
-    "email": "mdgalib23@gmail.com",
+    "email": "haba@gmail.com",
     "iscompleted": "no",
     "details": "I have to go to grandparents home at 31st december"
   },
   {
     "idno": 3,
     "dbimg": "https://i.ibb.co/SBgwvPg/task3.png",
-    "email": "mdgalib23@gmail.com",
+    "email": "haba@gmail.com",
     "iscompleted": "no",
     "details": "Final exam will start in middle of the january"
   },
