@@ -26,9 +26,9 @@ async function run() {
     // Load advertised
     app.get("/alltasks", async (req, res) => {
       const id = parseInt(req.params.id);
-      const query = {
-        //  $and: [{ isadvertised: "yes" }, { ispaid: "no" }]
-      };
+      // const query = {
+      //    $and: [{ isadvertised: "yes" }, { ispaid: "no" }]
+      // };
       const tasks = await mytasksCollection.find(query).toArray();
       res.send(tasks);
     });
@@ -40,6 +40,86 @@ async function run() {
       console.log(query);
       const tasks = await mytasksCollection.find(query).toArray();
       res.send(tasks);
+    });
+
+    // Load single tasks
+    app.get("/mytasks/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: ObjectId(id) };
+
+      const singletask = await mytasksCollection.findOne(query);
+
+      res.send(singletask);
+    });
+    // update task
+    app.put("/updatetask/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      console.log(filter);
+      const task = req.body;
+
+      const newdetails = task.details;
+
+      const updatedtask = {
+        $set: {
+          details: newdetails,
+        },
+      };
+      const result = await mytasksCollection.updateOne(filter, updatedtask);
+      res.send(result);
+    });
+
+    // load completed tasks
+
+    app.get("/completedtasks", async (req, res) => {
+      const email = req.query.email;
+
+      const query = {
+        $and: [{ email: email }, { iscompleted: "yes" }],
+      };
+      console.log(query);
+      const tasks = await mytasksCollection.find(query).toArray();
+      res.send(tasks);
+    });
+    // not completed
+    // update task
+    app.put("/notcompletedtasks/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      console.log(filter);
+      const task = req.body;
+
+      const updatedtask = {
+        $set: {
+          iscompleted: "no",
+        },
+      };
+      const result = await mytasksCollection.updateOne(filter, updatedtask);
+      res.send(result);
+    });
+    // make complete task
+    // load completed tasks
+
+    app.put("/completedtasks/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const filter = { _id: ObjectId(id) };
+      const updatedtask = {
+        $set: {
+          iscompleted: "yes",
+        },
+      };
+      const result = await mytasksCollection.updateOne(filter, updatedtask);
+      res.send(result);
+    });
+    // delete task
+
+    app.delete("/delete/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await mytasksCollection.deleteOne(query);
+      res.send(result);
     });
   } finally {
   }
