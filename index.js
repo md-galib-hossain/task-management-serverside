@@ -23,15 +23,6 @@ async function run() {
   try {
     const mytasksCollection = client.db("taskmanager").collection("mytasks");
 
-    // Load advertised
-    app.get("/alltasks", async (req, res) => {
-      const id = parseInt(req.params.id);
-      // const query = {
-      //    $and: [{ isadvertised: "yes" }, { ispaid: "no" }]
-      // };
-      const tasks = await mytasksCollection.find(query).toArray();
-      res.send(tasks);
-    });
     // load tasks by query email
     app.get("/mytasks", async (req, res) => {
       const email = req.query.email;
@@ -119,6 +110,12 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await mytasksCollection.deleteOne(query);
+      res.send(result);
+    });
+    // add task
+    app.post("/addtask", async (req, res) => {
+      const task = req.body;
+      const result = await mytasksCollection.insertOne(task);
       res.send(result);
     });
   } finally {
